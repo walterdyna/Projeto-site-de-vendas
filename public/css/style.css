@@ -1,0 +1,391 @@
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Cabeçalho (Header) */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #ffc107; /* Amarelo para hover */
+}
+
+/* Botões */
+.btn, .btn-submit {
+    display: inline-block;
+    background-color: #007bff; /* Azul primário */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border: none; /* Remover borda padrão de botão */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    font-size: 1rem;
+}
+
+.btn:hover, .btn-submit:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
+}
+
+/* Seção Hero (Página Inicial) */
+#hero {
+    background-color: #e2edff; /* Azul claro */
+    text-align: center;
+    padding: 50px 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+#hero h2 {
+    color: #0056b3;
+    margin-bottom: 15px;
+}
+
+#hero p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* Seção de Produtos (Catálogo na Página Inicial) */
+#products-catalog {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsivo, mínimo 250px por coluna */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Efeito de "levantar" ao passar o mouse */
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px; /* Altura fixa para as imagens */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+    display: block; /* Remove espaço extra abaixo da imagem */
+    border-bottom: 1px solid #eee;
+}
+
+.product-card h3 {
+    margin: 15px 10px 5px;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.product-card .price {
+    font-size: 1.4rem;
+    color: #28a745; /* Verde para preço */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.product-card button {
+    background-color: #6c757d; /* Cinza para o botão de detalhes */
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+    background-color: #5a6268;
+}
+
+
+/* Formulário de Cadastro de Produto */
+#product-form-section {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 30px auto; /* Centraliza o formulário */
+}
+
+.product-form .form-group {
+    margin-bottom: 15px;
+}
+
+.product-form label {
+    display: block; /* Cada label em sua própria linha */
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form textarea {
+    width: calc(100% - 22px); /* 100% menos padding e border */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.product-form textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.product-form input[type="file"] {
+    display: block; /* Para o input file ficar abaixo do label */
+    margin-top: 5px;
+}
+
+.image-preview {
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    min-height: 100px; /* Altura mínima para o preview */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    overflow: hidden; /* Garante que a imagem não vaze */
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 150px; /* Altura máxima da imagem no preview */
+    display: block;
+    border-radius: 4px;
+}
+
+.image-preview p {
+    color: #999;
+}
+
+
+/* Mensagens de Sucesso/Erro */
+.message {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724; /* Verde escuro */
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da; /* Vermelho claro */
+    color: #721c24; /* Vermelho escuro */
+    border: 1px solid #f5c6cb;
+}
+
+
+/* Rodapé (Footer) */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 30px;
+}
+
+/* Responsividade Básica (para telas menores) */
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+    }
+
+    header nav ul li {
+        margin: 5px 0;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    }
+
+    #product-form-section {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+/* Responsividade para dispositivos muito pequenos (celulares) */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header nav ul li {
+        margin: 3px 0;
+    }
+
+    .btn, .btn-submit {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    #hero {
+        padding: 30px 10px;
+    }
+
+    #hero h2 {
+        font-size: 1.3rem;
+    }
+
+    #hero p {
+        font-size: 1rem;
+    }
+
+    .product-card img {
+        height: 150px;
+    }
+
+    .product-card h3 {
+        font-size: 1rem;
+    }
+
+    .product-card .price {
+        font-size: 1.2rem;
+    }
+
+    #product-form-section {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .product-form input[type="text"],
+    .product-form input[type="number"],
+    .product-form textarea {
+        font-size: 0.9rem;
+    }
+}
+
+/* Responsividade para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    body {
+        font-size: 15px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    #hero {
+        padding: 40px 15px;
+    }
+
+    #hero h2 {
+        font-size: 1.5rem;
+    }
+
+    #hero p {
+        font-size: 1.05rem;
+    }
+
+    .product-card img {
+        height: 180px;
+    }
+
+    .product-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .product-card .price {
+        font-size: 1.3rem;
+    }
+
+    #product-form-section {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+}
+
+/* Estilo para o botão "Adicionar ao Carrinho" */
+.add-to-cart-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838;
+}
+
+/* Estilo para os itens do carrinho */
+#cart-items li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}

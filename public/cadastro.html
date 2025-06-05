@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Novo Produto</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Cadastrar Novo Produto</h1>
+        <div id="user-info" style="float: right; margin-top: -40px; margin-right: 20px;"></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="cadastro.html">Cadastrar Produto</a></li>
+                <li><a href="login.html" id="login-link">Login</a></li>
+                </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="product-form-section">
+            <form id="productForm" class="product-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="productName">Nome do Produto:</label>
+                    <input type="text" id="productName" name="productName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Descrição:</label>
+                    <textarea id="productDescription" name="productDescription" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="productPrice">Preço (R$):</label>
+                    <input type="number" id="productPrice" name="productPrice" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory">Categoria:</label>
+                    <input type="text" id="productCategory" name="productCategory">
+                </div>
+
+                <div class="form-group">
+                    <label for="productImage">Foto do Produto:</label>
+                    <input type="file" id="productImage" name="productImage" accept="image/*" required>
+                    <div id="image-preview" class="image-preview">
+                        <p>Pré-visualização da imagem</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Cadastrar Produto</button>
+            </form>
+            <div id="message" class="message"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Catálogo Online. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="js/cadastro.js"></script>
+</body>
+</html>

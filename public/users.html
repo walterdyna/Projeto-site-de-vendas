@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerenciamento de Usuários</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <h1>Gerenciamento de Usuários</h1>
+        <div id="user-info" style="float: right; margin-top: -40px; margin-right: 20px;"></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="cadastro.html">Cadastrar Produto</a></li>
+                <li><a href="login.html" id="login-link">Login</a></li>
+                <li><a href="users.html" id="users-link" style="display:none;">Gerenciar Usuários</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="user-management-section">
+            <h2>Cadastrar Novo Usuário</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" name="username" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+                <div class="form-group">
+                    <label for="isAdmin">Administrador:</label>
+                    <input type="checkbox" id="isAdmin" name="isAdmin" />
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Usuário</button>
+            </form>
+            <div id="message" class="message"></div>
+
+            <h2>Usuários Cadastrados</h2>
+            <table id="usersTable" border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Administrador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Lista de usuários será inserida aqui -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="js/users.js"></script>
+</body>
+</html>
