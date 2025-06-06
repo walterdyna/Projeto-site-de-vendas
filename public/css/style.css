@@ -8,6 +8,158 @@ body {
     line-height: 1.6;
 }
 
+/* Estilo para a seção de gerenciamento de usuários */
+#user-management-section {
+    max-width: 500px;
+    margin: 50px auto 80px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#user-management-section h2 {
+    color: #007bff;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#user-management-section .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#user-management-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+#user-management-section input[type="text"],
+#user-management-section input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#user-management-section input[type="text"]:focus,
+#user-management-section input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#user-management-section input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#user-management-section button.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#user-management-section button.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+#usersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+#usersTable th, #usersTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+#usersTable th {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+}
+
+#usersTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo para a seção de login */
+#login-section {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+#login-section h1 {
+    margin-bottom: 25px;
+    color: #007bff;
+    font-weight: 700;
+}
+
+#login-section .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#login-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+#login-section input[type="text"],
+#login-section input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#login-section input[type="text"]:focus,
+#login-section input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#login-section button.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#login-section button.btn-submit:hover {
+    background-color: #0056b3;
+}
+
 .product-card img {
     width: 100%;
     height: auto;
