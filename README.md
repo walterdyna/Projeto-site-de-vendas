@@ -1,204 +1,246 @@
-🚀 Catálogo Online da Quezia: Seu Negócio no WhatsApp!
-(Sugestão: Crie uma imagem de capa atrativa que mostre o layout principal ou um mockup do aplicativo em uso.)
+Projeto Site da Quezia
+1. Visão Geral do Projeto
+Este projeto é um sistema completo de catálogo online com funcionalidades integradas de e-commerce e gerenciamento administrativo. Foi desenvolvido para atender a pequenos e médios empreendedores que desejam digitalizar suas vendas com uma plataforma moderna, intuitiva e segura. O sistema permite o cadastro, edição, visualização e exclusão de produtos, controle de usuários com diferentes níveis de permissão e processos simplificados de compra, tudo com foco na usabilidade e performance.
 
-💡 Visão Geral e Propósito do Projeto
-Em um mundo cada vez mais digital, pequenos negócios precisam de soluções ágeis para alcançar seus clientes. O Catálogo Online da Quezia nasce dessa necessidade, oferecendo uma plataforma simples, intuitiva e eficiente para a exibição de produtos e a facilitação de pedidos via WhatsApp.
+A aplicação é construída com as seguintes tecnologias:
 
-O foco principal é eliminar barreiras como cadastros complexos e logins, proporcionando uma experiência de compra fluida. Os clientes podem navegar pelo catálogo, adicionar produtos a um carrinho virtual e, com um único clique, enviar o resumo do pedido diretamente para o número de WhatsApp da loja, agilizando o processo de venda e comunicação. A persistência do carrinho no navegador do cliente, via localStorage, garante que a seleção de itens não seja perdida ao navegar ou recarregar a página.
+Backend:
 
-Problema que resolve: A dificuldade de pequenos comerciantes em ter uma presença online eficaz e um canal de vendas direto e descomplicado para seus clientes.
-Objetivo: Proporcionar à loja da Quezia uma ferramenta robusta, porém de fácil gerenciamento, para expor seus produtos e converter visitantes em vendas através da conveniência do WhatsApp.
+Node.js
 
-✨ Funcionalidades Destaque
-1. 🛍️ Catálogo de Produtos Dinâmico e Gerenciável
-Carregamento Dinâmico: Produtos são buscados em tempo real de uma robusta API REST (/api/products), assegurando que o catálogo apresentado ao cliente esteja sempre sincronizado com o estoque e as novidades da loja.
-Exibição Rica: Cada produto é exibido com sua imagem, nome, preço e descrição, oferecendo uma prévia completa para o cliente.
-Painel Administrativo Simplificado: Acesso a funcionalidades administrativas que permitem:
-- Edição de Produtos: Atualizar informações de itens existentes de forma rápida e intuitiva.
-- Exclusão de Produtos: Remover itens que não estão mais disponíveis no catálogo.
+Express
 
-2. 🛒 Carrinho de Compras Inteligente
-Adição Facilitada: Botões "Adicionar ao Carrinho" em cada card de produto permitem que os clientes construam seus pedidos com facilidade.
-Controle de Quantidade Automático: Ao adicionar um produto já existente no carrinho, a quantidade é automaticamente incrementada, otimizando a experiência do usuário.
-Confirmação Visual Instantânea: Alertas amigáveis confirmam a adição de itens ao carrinho, proporcionando feedback imediato.
-Acesso e Gerenciamento Intuitivo: Um botão flutuante persistente "Ver Carrinho" (localizado no canto inferior direito da tela) abre um modal interativo com todos os detalhes do pedido.
-Flexibilidade na Edição: Dentro do modal do carrinho, o cliente pode:
-- Visualizar nome, preço unitário e quantidade de cada item.
-- Remover itens individualmente, recalculando o total do pedido em tempo real.
-Transparência Total: O valor total do carrinho é sempre visível e atualizado dinamicamente no modal.
-Persistência Local: Utiliza localStorage para manter os itens do carrinho salvos no navegador do cliente, mesmo após fechar ou recarregar a página.
+MongoDB
 
-3. 💬 Envio Descomplicado de Pedidos via WhatsApp
-Geração Automática de Mensagem: No modal do carrinho, o botão "Enviar WhatsApp" constrói automaticamente uma mensagem formatada com todos os detalhes do pedido.
-Conteúdo da Mensagem: Inclui uma lista clara de produtos (nome, preço unitário, quantidade) e o valor total do pedido.
-Integração Direta: A mensagem é pré-preenchida e enviada diretamente para o WhatsApp Web ou aplicativo (se instalado no dispositivo), direcionada ao número da loja configurado, agilizando o contato e a finalização da venda.
+Mongoose
 
-4. 🖼️ Visualização Detalhada de Produtos
-Modal de Detalhes: Ao clicar em "Ver Detalhes" na página inicial, um modal exibe a imagem do produto em tamanho maior junto com a descrição completa, proporcionando uma melhor experiência visual e informativa.
+Autenticação e Segurança:
 
-💻 Arquitetura e Tecnologias
-Este projeto segue uma arquitetura Client-Server tradicional, dividida em Frontend e Backend, garantindo modularidade e escalabilidade.
+JWT (JSON Web Tokens)
 
-Frontend (Folder: public/)
-Construído com as tecnologias web fundamentais, focado em uma experiência de usuário leve e responsiva.
+bcrypt para hash de senhas
 
-- HTML5: Define a estrutura semântica das páginas e o layout dos elementos.
-- CSS3: Responsável por toda a estilização, layout adaptativo (responsividade) e experiência visual agradável.
-- JavaScript (Vanilla): Implementa toda a lógica interativa do lado do cliente, incluindo:
-  - Manipulação do DOM para exibição dinâmica de produtos.
-  - Gerenciamento completo do carrinho de compras usando localStorage.
-  - Integração com a API do backend para buscar e enviar dados.
-  - Formatação e envio da mensagem para o WhatsApp Web.
+Upload de Imagens:
 
-Backend (File: server.js)
-Desenvolvido em Node.js, atua como a espinha dorsal do sistema, gerenciando a lógica de negócios e a interação com o banco de dados.
+Multer para tratamento de arquivos
 
-- Node.js: Ambiente de execução JavaScript no servidor, escolhido por sua performance e capacidade de lidar com I/O assíncrono.
-- Express.js: Framework web minimalista para Node.js, facilitando a criação de rotas da API REST e a manipulação de requisições HTTP.
-- MongoDB: Banco de dados NoSQL flexível e escalável, utilizado para armazenar os dados dos produtos.
-- Mongoose: ODM (Object Data Modeling) para MongoDB, simplificando a interação com o banco de dados através de esquemas e modelos.
-- Multer: Middleware crucial para o Express, responsável por lidar com o upload de arquivos (especificamente as imagens dos produtos). As imagens são armazenadas localmente no diretório uploads/.
-- CORS (cors): Middleware para habilitar a comunicação entre o frontend (rodando em uma porta) e o backend (rodando em outra), essencial para evitar problemas de Cross-Origin Resource Sharing.
-- dotenv (dotenv): Biblioteca para carregar variáveis de ambiente de um arquivo .env, garantindo que informações sensíveis (como strings de conexão do banco de dados e chaves de API) sejam mantidas fora do código-fonte e facilmente configuráveis para diferentes ambientes.
+Cloudinary para armazenamento em nuvem
 
-🔗 Integrações
-- API RESTful: Comunicação entre Frontend e Backend via requisições HTTP (GET, POST).
-- WhatsApp Web API: Utiliza URLs de esquema (whatsapp://send ou https://wa.me/) para pré-preencher mensagens e iniciar conversas no WhatsApp.
+Frontend:
 
-⚙️ Configuração e Execução (Guia para Desenvolvedores)
-Siga estas instruções para configurar e rodar o projeto em seu ambiente de desenvolvimento.
+HTML5, CSS3 e JavaScript puro (sem frameworks)
 
-Pré-requisitos
-Certifique-se de ter as seguintes ferramentas instaladas:
+Outros:
 
-- Node.js (versão LTS recomendada, ex: v20.x.x ou superior)
-- npm (gerenciador de pacotes do Node.js, vem com o Node.js)
-- Uma instância do MongoDB rodando (localmente ou um cluster gratuito no MongoDB Atlas).
+Middleware de tratamento global de erros
 
-1. Clonar o Repositório
-Abra seu terminal ou prompt de comando e execute:
+Sistema de permissões e controle de acesso por níveis
 
-```bash
-git clone https://github.com/walterdyna/Projeto-site-de-vendas
-cd Projeto-site-de-vendas
-```
+2. Funcionalidades Detalhadas
+✅ Gerenciamento de Produtos
+CRUD completo de produtos (Create, Read, Update, Delete).
 
-2. Configurar Variáveis de Ambiente
-Crie um arquivo chamado `.env` na raiz do seu projeto (na mesma pasta de `package.json` e `server.js`) e adicione as seguintes variáveis:
+Upload de imagens com armazenamento em nuvem via Cloudinary.
 
-```env
-# URL de conexão com o seu banco de dados MongoDB
-MONGODB_URI=sua_string_de_conexao_do_mongodb_atlas_ou_local
+Visualização completa dos dados do produto: nome, preço, descrição, categoria, estoque e imagem.
 
-# Porta em que o servidor Express irá rodar
+Validação automática do estoque antes da finalização de uma compra para evitar inconsistências.
+
+👥 Gerenciamento de Usuários
+Cadastro e login de usuários com senhas armazenadas com segurança (hash com bcrypt).
+
+Controle de acesso baseado em níveis de permissão:
+
+Usuários comuns: apenas navegam e compram.
+
+Administradores: podem gerenciar produtos.
+
+Usuários Supremos: usuários especiais identificados por nome (ex: alexdyna, queziacastelo) com acesso irrestrito, inclusive ao gerenciamento de usuários e relatórios.
+
+🔐 Autenticação e Segurança
+Sistema de autenticação robusto utilizando JWT com validade de 24 horas.
+
+Proteção de rotas sensíveis com middleware de verificação de token.
+
+Middleware de controle de permissões administrativas e supremas.
+
+Tratamento global de erros: padroniza respostas de falhas e facilita debugging.
+
+🛒 Carrinho de Compras
+Interface intuitiva para adicionar/remover produtos do carrinho.
+
+Persistência do estado do carrinho utilizando localStorage no navegador.
+
+Opção de enviar o resumo do carrinho via WhatsApp com link direto e mensagem pré-formatada, otimizando o processo de compra para o cliente e o vendedor.
+
+📊 Relatórios
+Geração de relatório simplificado com base no estoque atual.
+
+Acesso restrito exclusivamente aos usuários supremos para garantir segurança e confidencialidade dos dados.
+
+3. Instalação e Configuração
+⚙️ Pré-requisitos
+Node.js (versão 16 ou superior)
+
+MongoDB (pode ser local ou hospedado, como no MongoDB Atlas)
+
+Conta no Cloudinary (opcional, mas essencial para upload de imagens)
+
+📁 Variáveis de Ambiente
+Crie um arquivo .env na raiz do projeto com as seguintes chaves:
+MONGODB_URI=seu_uri_mongodb
+JWT_SECRET=sua_chave_secreta_jwt
+CLOUDINARY_CLOUD_NAME=seu_cloud_name
+CLOUDINARY_API_KEY=sua_api_key
+CLOUDINARY_API_SECRET=sua_api_secret
 PORT=3000
-```
 
-Exemplo MongoDB Atlas: `mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/catalogo_db?retryWrites=true&w=majority`  
-Exemplo Local: `mongodb://localhost:27017/catalogo_db`
+⚠️ Importante: Nunca compartilhe seu .env publicamente. Para deploy, use variáveis seguras no ambiente da hospedagem (como no Vercel, Heroku, etc).
 
-3. Instalar Dependências do Projeto
-Na raiz do projeto, execute o comando para instalar todas as bibliotecas necessárias:
+🧪 Passos para Instalação
+Clone o repositório:
+git clone <https://github.com/walterdyna/Projeto-site-de-vendas>
+cd <site-de-vendas>
 
-```bash
+Instale as dependências:
+
 npm install
-```
 
-4. Verificar a Estrutura do Projeto
-Para que o backend possa servir os arquivos do frontend corretamente, a estrutura do seu projeto deve seguir este padrão:
+Execute o servidor local:
 
-```
-seu-projeto/
-├── .env
-├── package.json
-├── server.js
-├── uploads/              # Diretório para onde as imagens serão salvas pelo Multer
-└── public/               # Contém todos os arquivos estáticos do Frontend
-    ├── index.html
-    ├── cadastro.html
-    ├── css/
-    │   └── style.css
-    └── js/
-        ├── main.js
-        └── cadastro.js
-```
+npm start ou node server.js
 
-Certifique-se de que todos os seus arquivos HTML, CSS e JavaScript estão localizados DENTRO da pasta `public/`.
+Acesse no navegador:
 
-5. Iniciar o Servidor Node.js
-Certifique-se de que sua instância do MongoDB esteja em execução. Em seguida, na raiz do projeto, execute:
-
-```bash
-npm start
-# Ou diretamente: node server.js
-```
-
-Você deverá ver mensagens no terminal indicando que o servidor foi iniciado e conectado ao MongoDB:
-
-```
-Conectado ao MongoDB!
-Servidor rodando em http://localhost:3000
-Frontend disponível em http://localhost:3000
-```
-
-6. Acessar o Catálogo Online
-Abra seu navegador web e digite o seguinte endereço:
-
-```
 http://localhost:3000
-```
 
-📱 Configuração do Número de Contato do WhatsApp
-Para que o botão "Enviar WhatsApp" funcione corretamente, você precisa configurar o número de telefone da loja.
 
-Abra o arquivo `public/js/main.js` e localize a seguinte constante:
+🛠️ Dicas de Solução de Problemas
+Verifique se o MongoDB está ativo e se a URI está correta no .env.
 
-```js
-// ATENÇÃO: Altere este número para o número de WhatsApp da sua loja.
-// Formato: Código do País + DDD + Número (apenas dígitos, sem traços, espaços ou parênteses).
-// Exemplo para um número de São Paulo, Brasil: '5511999999999'
-const whatsappPhoneNumber = '5511999999999';
-```
+Certifique-se de que as credenciais do Cloudinary estão corretas para upload.
 
-Substitua `'5511999999999'` pelo número de WhatsApp real e completo da sua loja.
+Use logs no terminal para detectar erros ao iniciar o servidor.
 
-📸 Imagens Ilustrativas do Projeto
-![index](image.png)
-![Cadastro de itens](image-1.png)
-![Cadastro de usuarios](image-2.png)
-![Relatorio de estoque](image-3.png)
-![Tela de login](image-4.png)
-(Insira aqui as capturas de tela do seu projeto para demonstrar as funcionalidades.)
+4. Uso da Aplicação
+🔑 Acesso e Autenticação
+Qualquer usuário pode se cadastrar ou fazer login via formulário.
 
-- Página Principal do Catálogo: Uma visão geral da interface principal com os produtos.
-- Modal do Carrinho de Compras: Demonstra o carrinho aberto com itens, total e botões de ação.
-- Exemplo de Mensagem Gerada para o WhatsApp: Uma captura de tela da mensagem pré-preenchida no WhatsApp Web.
+Usuários supremos (alexdyna e queziacastelo) são reconhecidos automaticamente ao fazer login e têm acesso exclusivo a funções administrativas sensíveis.
 
-🔮 Próximos Passos (Roadmap)
-Este projeto é uma base sólida e pode ser expandido com diversas funcionalidades. Algumas ideias para futuras melhorias incluem:
+🧭 Funcionalidades Principais
+Visualização dos produtos por qualquer usuário.
 
-- Autenticação de Usuários: Implementar login para clientes e administradores, permitindo perfis personalizados e histórico de pedidos.
-- Sistema de Busca e Filtro: Adicionar funcionalidade de busca por nome de produto, categoria ou faixa de preço.
-- Paginação do Catálogo: Melhorar a experiência em catálogos grandes, dividindo os produtos em páginas.
-- Gestão de Pedidos: Um painel administrativo mais robusto para gerenciar e acompanhar pedidos recebidos.
-- Detalhes do Produto: Páginas dedicadas para cada produto com mais informações, galerias de imagens, etc.
-- Checkout Simplificado: Integração com gateways de pagamento (ex: Mercado Pago, PagSeguro) para pagamentos diretos.
-- Notificações: Adicionar notificações em tempo real para novos pedidos.
+Adição de produtos ao carrinho e envio do pedido via WhatsApp.
 
-🤝 Como Contribuir
-Contribuições são sempre bem-vindas para tornar este projeto ainda melhor!
+Área administrativa para:
 
-- Faça um fork do repositório.
-- Crie uma branch para sua feature (`git checkout -b feature/minha-nova-funcionalidade`).
-- Faça suas alterações e commit (`git commit -m 'feat: adiciona nova funcionalidade X'`).
-- Envie suas alterações para o fork (`git push origin feature/minha-nova-funcionalidade`).
-- Abra um Pull Request detalhando as mudanças.
+Gerenciar produtos (criar, editar, excluir).
 
-✉️ Contato e Suporte
-Para dúvidas, sugestões, ou caso precise de suporte:
+Acessar relatório de estoque.
 
-Alex Dyna  
-Email: wdyna@hotmail.com 
-GitHub: [walterdyna](https://github.com/walterdyna)  
+Gerenciar usuários (restrito a supremos).
 
-Obrigado por explorar o Catálogo Online da Quezia!
+5. Arquitetura do Backend
+🌐 Configuração do Servidor
+Configuração básica do Express para:
+
+Servir APIs RESTful
+
+Servir arquivos estáticos (HTML/CSS/JS)
+
+Utilização de middlewares: cors, express.json, express.urlencoded
+
+🔁 Rotas da API
+POST /api/auth/login — Login de usuários.
+
+GET|POST|PUT|DELETE /api/products — CRUD de produtos (acesso controlado por nível de permissão).
+
+POST /api/products/validate-stock — Validação de estoque antes da venda.
+
+GET /api/products/report — Relatório de estoque (exclusivo para supremos).
+
+GET|POST|DELETE /api/users — Gerenciamento de usuários (exclusivo para supremos).
+
+🔒 Autenticação e Autorização
+Tokens JWT gerados no login e enviados nas requisições protegidas.
+
+Middleware de autorização que:
+
+Valida token JWT
+
+Confirma permissões de administrador
+
+Confirma se o usuário é um "usuário supremo"
+
+6. Modelos de Dados
+🧍 Usuário (User)
+
+{
+  username: String, // obrigatório e único
+  password: String, // armazenado com hash bcrypt
+  isAdmin: Boolean  // define permissões administrativas
+}
+
+📦 Produto (Product)
+{
+  name: String,      // obrigatório e único
+  price: Number,     // obrigatório
+  stock: Number,     // obrigatório, não pode ser negativo
+  description: String, // opcional
+  category: String,  // opcional
+  imageUrl: String   // URL da imagem armazenada na nuvem
+}
+
+Visão Geral do Frontend
+Estrutura em HTML puro com rotas simuladas (navegação baseada em templates).
+
+JavaScript nativo para:
+
+Chamada às APIs com fetch
+
+Manipulação do DOM
+
+Controle de sessão (login/logout)
+
+Validações e interações com o carrinho
+
+Estilo visual limpo e responsivo com CSS customizado.
+
+Modal para visualização de produto detalhado.
+
+Elementos visuais são renderizados dinamicamente de acordo com o tipo de usuário (usuário comum, admin ou supremo).
+
+8. Testes e Validações
+Validações no backend para:
+
+Evitar duplicidade de nomes de produtos e usuários
+
+Garantir dados consistentes no banco
+
+Proteções contra acesso não autorizado com validação de token e permissões.
+
+Testes manuais realizados em:
+
+Cadastro e login de usuários
+
+Fluxo completo de gerenciamento de produtos
+
+Envio de pedido via WhatsApp
+
+Acesso restrito a relatórios e rotas protegidas
+
+Interface projetada para funcionar corretamente em diferentes tamanhos de tela e dispositivos.
+
+9. Contribuição e Contato
+Contribuições são bem-vindas!
+
+Para sugerir melhorias, reportar bugs ou contribuir com código, abra uma issue ou envie um pull request.
+
+Para dúvidas, sugestões ou colaborações, entre em contato com o autor:
+
+👤 Alex Dyna
+https://github.com/walterdyna
+E-mail: wdyna@hotmail.com
+
+

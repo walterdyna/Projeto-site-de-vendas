@@ -5,8 +5,9 @@ const router = express.Router();
 
 // Middleware para verificar se o usuário é admin supremo
 const isSupremeUser = (req, res, next) => {
-    if (req.user.username !== 'alexdyna') {
-        return res.status(403).json({ message: 'Acesso negado: Apenas o usuário supremo pode acessar esta rota' });
+    const allowedUsers = ['alexdyna', 'queziacastelo'];
+    if (!allowedUsers.includes(req.user.username)) {
+        return res.status(403).json({ message: 'Acesso negado: Apenas usuários supremos podem acessar esta rota' });
     }
     next();
 };
@@ -21,20 +22,26 @@ router.get('/', authenticateToken, isSupremeUser, async (req, res) => {
     }
 });
 
-// Rota para criar novos usuários (apenas supremo)
 import bcrypt from 'bcrypt';
 
+// Rota para criar novos usuários (apenas supremo)
 router.post('/', authenticateToken, isSupremeUser, async (req, res) => {
     const { username, password, isAdmin } = req.body;
     try {
+        console.log('POST /api/users - Dados recebidos:', req.body);
         const existingUser = await User.findOne({ username });
-        if (existingUser) return res.status(400).json({ message: 'Usuário já existe' });
+        if (existingUser) {
+            console.log('Usuário já existe:', username);
+            return res.status(400).json({ message: 'Usuário já existe' });
+        }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, password: hashedPassword, isAdmin: isAdmin || false });
+        // Remove manual hashing to avoid double hashing
+        const newUser = new User({ username, password, isAdmin: isAdmin || false });
         await newUser.save();
+        console.log('Usuário criado com sucesso:', newUser);
         res.status(201).json({ message: 'Usuário criado com sucesso', user: { username: newUser.username, isAdmin: newUser.isAdmin } });
     } catch (error) {
+        console.error('Erro ao criar usuário:', error);
         res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
     }
 });

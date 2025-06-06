@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from './models/User.js';
 import authRoutes from './routes/auth.js';
+import usersRoutes from './routes/users.js';
 
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +23,13 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 
 app.use(cors());
+
+// Simple request logger middleware for debugging
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url} - Headers:`, req.headers);
+    next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -31,6 +39,7 @@ import productRoutes from './routes/products.js';
 // Register auth routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes); // Registrando rotas de produtos
+app.use('/api/users', usersRoutes); // Registrando rotas de usuários
 
 // Mongoose conexão
 async function connectDB() {

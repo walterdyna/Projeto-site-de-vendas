@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mostrar link Gerenciar Usuários apenas para supremo
         if (usersLink) {
-            if (username === 'alexdyna') {
+            if (username === 'alexdyna' || username === 'queziacastelo') {
                 usersLink.style.display = 'inline';
             } else {
                 usersLink.style.display = 'none';
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show "Gerar Relatório de Estoque" button only for user "alexdyna"
         const btnReportStock = document.getElementById('btnReportStock');
         if (btnReportStock) {
-            if (username === 'alexdyna') {
+            if (username === 'alexdyna' || username === 'queziacastelo') {
                 btnReportStock.style.display = 'inline-block';
             } else {
                 btnReportStock.style.display = 'none';

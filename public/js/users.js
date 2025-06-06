@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Restringir acesso à página para usuário supremo "alexdyna"
-    if (username !== 'alexdyna') {
-        alert('Acesso negado: Apenas o usuário supremo pode acessar esta página.');
+    // Restringir acesso à página para usuários supremos "alexdyna" e "queziacastelo"
+    if (username !== 'alexdyna' && username !== 'queziacastelo') {
+        alert('Acesso negado: Apenas usuários supremos podem acessar esta página.');
         window.location.href = 'index.html';
         return;
     }
