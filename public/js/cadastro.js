@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formData = new FormData(productForm); // Coleta todos os dados do formulário, incluindo o arquivo
 
+        // Adiciona o campo productStock ao FormData
+        const productStock = document.getElementById('productStock').value;
+        formData.append('productStock', productStock);
+
         // Exemplo: mostrar os dados no console antes de enviar para o backend
         // for (let pair of formData.entries()) {
         //     console.log(pair[0] + ': ' + pair[1]);

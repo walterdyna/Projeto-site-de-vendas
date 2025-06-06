@@ -16,14 +16,15 @@
                 <li><a href="cadastro.html">Cadastrar Produto</a></li>
                 <li><a href="login.html" id="login-link">Login</a></li>
                 <li><a href="users.html" id="users-link" style="display:none;">Gerenciar Usuários</a></li>
-                </ul>
+                <li><button id="btnReportStock" style="display:none; margin-left: 10px;">Gerar Relatório de Estoque</button></li>
+            </ul>
         </nav>
     </header>
 
     <main>
         <section id="hero">
             <h2>Catálogo Quezia: Seu Desejo, Pronta Entrega e com Estilo!</h2>
-<p>Explore nossa seleção exclusiva de produtos e receba a beleza que você merece, sem espera.</p>
+            <p>Explore nossa seleção exclusiva de produtos e receba a beleza que você merece, sem espera.</p>
             <a href="cadastro.html" class="btn">Comece a Cadastrar Agora!</a>
         </section>
 
@@ -31,7 +32,7 @@
             <h2>Nossos Produtos</h2>
             <div class="product-grid">
                 <p>Nenhum produto cadastrado ainda. <a href="cadastro.html">Cadastre o primeiro!</a></p>
-                </div>
+            </div>
         </section>
     </main>
 
@@ -45,6 +46,40 @@
         <p><strong>Total: R$ <span id="cart-total">0,00</span></strong></p>
         <button id="send-whatsapp-btn" style="background-color: #25D366; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%;">Enviar WhatsApp</button>
         <button id="close-cart-btn" style="background-color: #ccc; color: black; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%;">Fechar</button>
+    </div>
+
+    <!-- Stock Report Modal -->
+    <div id="stock-report-modal" style="display:none; position: fixed; top: 50px; left: 50%; transform: translateX(-50%); width: 80%; max-width: 800px; max-height: 70%; overflow-y: auto; background: white; border: 1px solid #ccc; border-radius: 5px; padding: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.3); z-index: 2000;">
+        <h3>Relatório de Itens no Estoque</h3>
+        <table id="stock-report-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 1px solid #ccc; padding: 8px; text-align: left;">Nome do Item</th>
+                    <th style="border-bottom: 1px solid #ccc; padding: 8px; text-align: right;">Quantidade em Estoque</th>
+                    <th style="border-bottom: 1px solid #ccc; padding: 8px; text-align: right;">Valor do Item (R$)</th>
+                    <th style="border-bottom: 1px solid #ccc; padding: 8px; text-align: right;">Valor Total do Estoque (R$)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="border-top: 1px solid #ccc; padding: 8px; text-align: right; font-weight: bold;">Valor Total Geral do Estoque (R$)</td>
+                    <td id="stock-report-grand-total" style="border-top: 1px solid #ccc; padding: 8px; text-align: right; font-weight: bold;">0,00</td>
+                </tr>
+            </tfoot>
+        </table>
+        <button id="close-stock-report-btn" style="margin-top: 15px; padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Fechar</button>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="product-details-modal" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: white; border: 1px solid #ccc; border-radius: 8px; padding: 20px; max-width: 600px; max-height: 80vh; overflow-y: auto; z-index: 3000; box-shadow: 0 2px 15px rgba(0,0,0,0.3);">
+        <button id="close-product-details" style="float: right; background: transparent; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+        <img id="product-details-image" src="" alt="" style="max-width: 100%; height: auto; display: block; margin-bottom: 15px; border-radius: 5px;">
+        <h3 id="product-details-name"></h3>
+        <p id="product-details-description" style="white-space: pre-wrap;"></p>
     </div>
 
     <script src="js/main.js"></script>

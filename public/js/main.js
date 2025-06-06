@@ -22,6 +22,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Show "Gerar Relatório de Estoque" button only for user "alexdyna"
+        const btnReportStock = document.getElementById('btnReportStock');
+        if (btnReportStock) {
+            if (username === 'alexdyna') {
+                btnReportStock.style.display = 'inline-block';
+            } else {
+                btnReportStock.style.display = 'none';
+            }
+
+            btnReportStock.addEventListener('click', async () => {
+                if (!token) {
+                    alert('Você precisa estar logado para acessar o relatório.');
+                    return;
+                }
+                try {
+                    const response = await fetch('/api/products/report', {
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        alert('Erro ao obter relatório: ' + (errorData.message || response.statusText));
+                        return;
+                    }
+                    const report = await response.json();
+                    showStockReportModal(report);
+                } catch (error) {
+                    alert('Erro na requisição: ' + error.message);
+                }
+            });
+        }
+
         document.getElementById('logout-btn').addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
@@ -38,6 +71,59 @@ document.addEventListener('DOMContentLoaded', () => {
     function getCart() {
         const cart = localStorage.getItem('cart');
         return cart ? JSON.parse(cart) : [];
+    }
+
+    // Function to show the stock report modal with data
+    function showStockReportModal(report) {
+        const modal = document.getElementById('stock-report-modal');
+        const tbody = modal.querySelector('tbody');
+        const grandTotalElem = document.getElementById('stock-report-grand-total');
+
+        tbody.innerHTML = '';
+        let grandTotal = 0;
+
+        report.forEach(item => {
+            const totalValue = item.price * item.stock;
+            grandTotal += totalValue;
+
+            const tr = document.createElement('tr');
+
+            const tdName = document.createElement('td');
+            tdName.textContent = item.name;
+            tdName.style.textAlign = 'left';
+            tdName.style.padding = '8px';
+            tr.appendChild(tdName);
+
+            const tdStock = document.createElement('td');
+            tdStock.textContent = item.stock;
+            tdStock.style.textAlign = 'right';
+            tdStock.style.padding = '8px';
+            tr.appendChild(tdStock);
+
+            const tdPrice = document.createElement('td');
+            tdPrice.textContent = item.price.toFixed(2).replace('.', ',');
+            tdPrice.style.textAlign = 'right';
+            tdPrice.style.padding = '8px';
+            tr.appendChild(tdPrice);
+
+            const tdTotal = document.createElement('td');
+            tdTotal.textContent = totalValue.toFixed(2).replace('.', ',');
+            tdTotal.style.textAlign = 'right';
+            tdTotal.style.padding = '8px';
+            tr.appendChild(tdTotal);
+
+            tbody.appendChild(tr);
+        });
+
+        grandTotalElem.textContent = grandTotal.toFixed(2).replace('.', ',');
+
+        modal.style.display = 'block';
+
+        // Close button event
+        const closeBtn = document.getElementById('close-stock-report-btn');
+        closeBtn.onclick = () => {
+            modal.style.display = 'none';
+        };
     }
 
     function saveCart(cart) {
@@ -123,73 +209,103 @@ document.addEventListener('DOMContentLoaded', () => {
                 const productCard = document.createElement('div');
                 productCard.classList.add('product-card');
 
-                let buttonsHtml = `<button class="view-details-btn" data-id="${product._id}">Ver Detalhes</button>`;
-                buttonsHtml += `<button class="add-to-cart-btn" data-id="${product._id}">Adicionar ao Carrinho</button>`;
+            let buttonsHtml = `<button class="view-details-btn" data-id="${product._id}">Ver Detalhes</button>`;
+            buttonsHtml += `<button class="add-to-cart-btn" data-id="${product._id}">Adicionar ao Carrinho</button>`;
 
-                if (isAdmin && token) {
-                    buttonsHtml += `
-                        <button class="edit-btn" data-id="${product._id}">Editar</button>
-                        <button class="delete-btn" data-id="${product._id}">Apagar</button>
-                    `;
-                }
-
-                productCard.innerHTML = `
-                    <img src="${product.imageUrl || 'https://via.placeholder.com/200'}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p class="price">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
-                    ${buttonsHtml}
+            if (isAdmin && token) {
+                buttonsHtml += `
+                    <button class="edit-btn" data-id="${product._id}">Editar</button>
+                    <button class="delete-btn" data-id="${product._id}">Apagar</button>
                 `;
-                productGrid.appendChild(productCard);
-            });
+            }
 
-            // Event listener para botões "Adicionar ao Carrinho"
-            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
+            productCard.innerHTML = `
+                <img src="${product.imageUrl || 'https://via.placeholder.com/200'}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p class="price">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
+                ${buttonsHtml}
+            `;
+            productGrid.appendChild(productCard);
+        });
+
+        // Event listener para botões "Ver Detalhes"
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productId = event.target.getAttribute('data-id');
+                const product = products.find(p => p._id === productId);
+                if (product) {
+                    const modal = document.getElementById('product-details-modal');
+                    const modalImage = document.getElementById('product-details-image');
+                    const modalName = document.getElementById('product-details-name');
+                    const modalDescription = document.getElementById('product-details-description');
+
+                    modalImage.src = product.imageUrl || 'https://via.placeholder.com/400';
+                    modalImage.alt = product.name;
+                    modalName.textContent = product.name;
+                    modalDescription.textContent = product.description || 'Sem descrição disponível.';
+
+                    modal.style.display = 'block';
+                }
+            });
+        });
+
+        // Event listener para fechar modal de detalhes
+        const closeModalBtn = document.getElementById('close-product-details');
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                const modal = document.getElementById('product-details-modal');
+                modal.style.display = 'none';
+            });
+        }
+
+        // Event listener para botões "Adicionar ao Carrinho"
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productId = event.target.getAttribute('data-id');
+                const product = products.find(p => p._id === productId);
+                if (product) {
+                    addToCart(product);
+                }
+            });
+        });
+
+        if (isAdmin && token) {
+            // Add event listeners for delete buttons
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', async (event) => {
                     const productId = event.target.getAttribute('data-id');
-                    const product = products.find(p => p._id === productId);
-                    if (product) {
-                        addToCart(product);
+                    if (confirm('Tem certeza que deseja apagar este produto?')) {
+                        try {
+                            const response = await fetch(`/api/products/${productId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': 'Bearer ' + token
+                                }
+                            });
+                            if (response.ok) {
+                                alert('Produto apagado com sucesso!');
+                                location.reload();
+                            } else {
+                                const errorData = await response.json();
+                                alert('Erro ao apagar produto: ' + (errorData.message || response.statusText));
+                            }
+                        } catch (error) {
+                            alert('Erro na requisição: ' + error.message);
+                        }
                     }
                 });
             });
 
-            if (isAdmin && token) {
-                // Add event listeners for delete buttons
-                document.querySelectorAll('.delete-btn').forEach(button => {
-                    button.addEventListener('click', async (event) => {
-                        const productId = event.target.getAttribute('data-id');
-                        if (confirm('Tem certeza que deseja apagar este produto?')) {
-                            try {
-                                const response = await fetch(`/api/products/${productId}`, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'Authorization': 'Bearer ' + token
-                                    }
-                                });
-                                if (response.ok) {
-                                    alert('Produto apagado com sucesso!');
-                                    location.reload();
-                                } else {
-                                    const errorData = await response.json();
-                                    alert('Erro ao apagar produto: ' + (errorData.message || response.statusText));
-                                }
-                            } catch (error) {
-                                alert('Erro na requisição: ' + error.message);
-                            }
-                        }
-                    });
+            // Add event listeners for edit buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.getAttribute('data-id');
+                    // Redirect to edit page with product ID as query param
+                    window.location.href = `editar.html?id=${productId}`;
                 });
-
-                // Add event listeners for edit buttons
-                document.querySelectorAll('.edit-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const productId = event.target.getAttribute('data-id');
-                        // Redirect to edit page with product ID as query param
-                        window.location.href = `editar.html?id=${productId}`;
-                    });
-                });
-            }
-        })
+            });
+        }
+    })
         .catch(error => console.error('Erro ao carregar produtos:', error));
 
     // Botões do carrinho
