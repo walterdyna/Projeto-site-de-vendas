@@ -205,114 +205,140 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             productGrid.innerHTML = ''; // Limpa o placeholder
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('product-card');
 
-            let buttonsHtml = `<button class="view-details-btn" data-id="${product._id}">Ver Detalhes</button>`;
-            buttonsHtml += `<button class="add-to-cart-btn" data-id="${product._id}">Adicionar ao Carrinho</button>`;
+            // Variável para armazenar os produtos filtrados
+            let filteredProducts = products;
 
-            if (isAdmin && token) {
-                buttonsHtml += `
-                    <button class="edit-btn" data-id="${product._id}">Editar</button>
-                    <button class="delete-btn" data-id="${product._id}">Apagar</button>
-                `;
+            // Função para renderizar os produtos filtrados
+            function renderFilteredProducts() {
+                productGrid.innerHTML = '';
+                filteredProducts.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+
+                    let buttonsHtml = `<button class="view-details-btn" data-id="${product._id}">Ver Detalhes</button>`;
+                    buttonsHtml += `<button class="add-to-cart-btn" data-id="${product._id}">Adicionar ao Carrinho</button>`;
+
+                    if (isAdmin && token) {
+                        buttonsHtml += `
+                            <button class="edit-btn" data-id="${product._id}">Editar</button>
+                            <button class="delete-btn" data-id="${product._id}">Apagar</button>
+                        `;
+                    }
+
+                    productCard.innerHTML = `
+                        <img src="${product.imageUrl || 'https://via.placeholder.com/200'}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p class="price">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
+                        ${buttonsHtml}
+                    `;
+                    productGrid.appendChild(productCard);
+                });
+
+                // Reaplicar event listeners para os botões após renderizar
+                document.querySelectorAll('.view-details-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const productId = event.target.getAttribute('data-id');
+                        const product = filteredProducts.find(p => p._id === productId);
+                        if (product) {
+                            const modal = document.getElementById('product-details-modal');
+                            const modalImage = document.getElementById('product-details-image');
+                            const modalName = document.getElementById('product-details-name');
+                            const modalDescription = document.getElementById('product-details-description');
+
+                            modalImage.src = product.imageUrl || 'https://via.placeholder.com/400';
+                            modalImage.alt = product.name;
+                            modalName.textContent = product.name;
+                            modalDescription.textContent = product.description || 'Sem descrição disponível.';
+
+                            modal.style.display = 'block';
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const productId = event.target.getAttribute('data-id');
+                        const product = filteredProducts.find(p => p._id === productId);
+                        if (product) {
+                            addToCart(product);
+                        }
+                    });
+                });
+
+                if (isAdmin && token) {
+                    document.querySelectorAll('.delete-btn').forEach(button => {
+                        button.addEventListener('click', async (event) => {
+                            const productId = event.target.getAttribute('data-id');
+                            if (confirm('Tem certeza que deseja apagar este produto?')) {
+                                try {
+                                    const response = await fetch(`/api/products/${productId}`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Authorization': 'Bearer ' + token
+                                        }
+                                    });
+                                    if (response.ok) {
+                                        alert('Produto apagado com sucesso!');
+                                        location.reload();
+                                    } else {
+                                        const errorData = await response.json();
+                                        alert('Erro ao apagar produto: ' + (errorData.message || response.statusText));
+                                    }
+                                } catch (error) {
+                                    alert('Erro na requisição: ' + error.message);
+                                }
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.edit-btn').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            const productId = event.target.getAttribute('data-id');
+                            window.location.href = `editar.html?id=${productId}`;
+                        });
+                    });
+                }
             }
 
-            productCard.innerHTML = `
-                <img src="${product.imageUrl || 'https://via.placeholder.com/200'}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p class="price">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
-                ${buttonsHtml}
-            `;
-            productGrid.appendChild(productCard);
-        });
+            // Renderiza inicialmente todos os produtos
+            renderFilteredProducts();
 
-        // Event listener para botões "Ver Detalhes"
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const productId = event.target.getAttribute('data-id');
-                const product = products.find(p => p._id === productId);
-                if (product) {
-                    const modal = document.getElementById('product-details-modal');
-                    const modalImage = document.getElementById('product-details-image');
-                    const modalName = document.getElementById('product-details-name');
-                    const modalDescription = document.getElementById('product-details-description');
-
-                    modalImage.src = product.imageUrl || 'https://via.placeholder.com/400';
-                    modalImage.alt = product.name;
-                    modalName.textContent = product.name;
-                    modalDescription.textContent = product.description || 'Sem descrição disponível.';
-
-                    modal.style.display = 'block';
-                }
-            });
-        });
-
-        // Event listener para fechar modal de detalhes
-        const closeModalBtn = document.getElementById('close-product-details');
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', () => {
-                const modal = document.getElementById('product-details-modal');
-                modal.style.display = 'none';
-            });
-        }
-
-        // Event listener para botões "Adicionar ao Carrinho"
-        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const productId = event.target.getAttribute('data-id');
-                const product = products.find(p => p._id === productId);
-                if (product) {
-                    addToCart(product);
-                }
-            });
-        });
-
-        if (isAdmin && token) {
-            // Add event listeners for delete buttons
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const productId = event.target.getAttribute('data-id');
-                    if (confirm('Tem certeza que deseja apagar este produto?')) {
-                        try {
-                            const response = await fetch(`/api/products/${productId}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            });
-                            if (response.ok) {
-                                alert('Produto apagado com sucesso!');
-                                location.reload();
-                            } else {
-                                const errorData = await response.json();
-                                alert('Erro ao apagar produto: ' + (errorData.message || response.statusText));
-                            }
-                        } catch (error) {
-                            alert('Erro na requisição: ' + error.message);
-                        }
+            // Adiciona event listeners aos botões de filtro
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const origin = button.getAttribute('data-origin');
+                    if (origin === 'Todos') {
+                        filteredProducts = products;
+                    } else {
+                        filteredProducts = products.filter(p => (p.origem || '').trim().toLowerCase() === origin.trim().toLowerCase());
                     }
+                    renderFilteredProducts();
                 });
             });
 
-            // Add event listeners for edit buttons
-            document.querySelectorAll('.edit-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const productId = event.target.getAttribute('data-id');
-                    // Redirect to edit page with product ID as query param
-                    window.location.href = `editar.html?id=${productId}`;
-                });
+            // Adiciona evento para fechar modal de detalhes ao clicar no botão "X"
+            const closeDetailsBtn = document.getElementById('close-product-details');
+            const productDetailsModal = document.getElementById('product-details-modal');
+
+            closeDetailsBtn.addEventListener('click', () => {
+                productDetailsModal.style.display = 'none';
             });
-        }
-    })
+
+            // Adiciona evento para fechar modal de detalhes ao clicar fora da área do modal
+            window.addEventListener('click', (event) => {
+                if (event.target === productDetailsModal) {
+                    productDetailsModal.style.display = 'none';
+                }
+            });
+        })
         .catch(error => console.error('Erro ao carregar produtos:', error));
 
     // Botões do carrinho
     const viewCartBtn = document.getElementById('view-cart-btn');
     const cartModal = document.getElementById('cart-modal');
     const closeCartBtn = document.getElementById('close-cart-btn');
-    const sendWhatsAppBtn = document.getElementById('send-whatsapp-btn');
 
     viewCartBtn.addEventListener('click', () => {
         renderCart();

@@ -38,6 +38,17 @@
                     <input type="text" id="productCategory" name="productCategory" />
                 </div>
                 <div class="form-group">
+                    <label for="productOrigin">Origem:</label>
+                    <select id="productOrigin" name="productOrigin" required>
+                        <option value="">Selecione a origem</option>
+                        <option value="Avon">Avon</option>
+                        <option value="Natura">Natura</option>
+                        <option value="Boticario">Boticário</option>
+                        <option value="Chocolate">Chocolate</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="productImage">Foto do Produto (opcional):</label>
                     <input type="file" id="productImage" name="productImage" accept="image/*" />
                     <div id="image-preview" class="image-preview">

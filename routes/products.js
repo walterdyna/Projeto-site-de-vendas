@@ -54,13 +54,14 @@ router.post('/', upload.single('productImage'), verifyToken, verifyAdmin, async 
     try {
         console.log('Recebido corpo:', req.body);
         console.log('Arquivo recebido:', req.file);
-        const { productName, productPrice, productStock, productDescription, productCategory } = req.body;
+        const { productName, productPrice, productStock, productDescription, productCategory, productOrigin } = req.body;
         const newProduct = new Product({
             name: productName,
             price: Number(productPrice),
             stock: Number(Array.isArray(productStock) ? productStock[0] : productStock),
             description: productDescription,
-            category: productCategory
+            category: productCategory,
+            origem: productOrigin
         });
         if (req.file) {
             console.log('Tentando atribuir imagem:', req.file.path);
@@ -97,11 +98,15 @@ router.get('/', async (req, res) => {
 });
 
 // Atualizar produto
-router.put('/:id', verifyToken, verifyAdmin, async (req, res) => {
+router.put('/:id', upload.single('productImage'), verifyToken, verifyAdmin, async (req, res) => {
     try {
+        const updatedData = req.body;
+        if (req.file) {
+            updatedData.imageUrl = req.file.path;
+        }
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updatedData,
             { new: true }
         );
         if (!updatedProduct) return res.status(404).json({ error: 'Produto não encontrado' });

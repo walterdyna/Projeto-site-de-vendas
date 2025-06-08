@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('productDescription').value = product.description;
             document.getElementById('productPrice').value = product.price;
             document.getElementById('productCategory').value = product.category;
+            document.getElementById('productOrigin').value = product.origem || '';
             imagePreview.innerHTML = `<img src="${product.imageUrl}" alt="${product.name}">`;
         })
         .catch(err => {
