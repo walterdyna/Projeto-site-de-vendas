@@ -8,6 +8,15 @@ body {
     line-height: 1.6;
 }
 
+.filter-btn{
+    border: none;
+}
+
+#btnReportStock{
+    border-radius: 30px;
+    padding: 5px;
+}
+
 /* Estilo para a seção de gerenciamento de usuários */
 #user-management-section {
     max-width: 500px;
