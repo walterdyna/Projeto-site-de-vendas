@@ -236,6 +236,27 @@ header nav ul li a:hover {
     background-color: #0056b3; /* Azul mais escuro no hover */
 }
 
+#search-input {
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-color: #0056b3;
+}
+
+#search-btn{
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-color: #0056b3;
+}
+
+#category-select{
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-color: #0056b3;
+}
+
 /* Seção Hero (Página Inicial) */
 #hero {
     background-color: #e2edff; /* Azul claro */
@@ -445,6 +466,10 @@ footer {
         font-size: 14px;
     }
 
+    #filter-section{
+        font-size: 9px;
+    }
+
     header h1 {
         font-size: 1.5rem;
     }
@@ -468,6 +493,41 @@ footer {
 
     #hero p {
         font-size: 1rem;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas pequenas */
+    }
+
+    #search-section {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #search-input {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 5px;
+        margin-right: 0;
+    }
+
+    #category-select {
+        flex: 0 0 auto;
+        padding: 5px;
+        margin-right: 0;
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.9rem;
+    }
+
+    #search-btn {
+        flex: 0 0 auto;
+        padding: 5px 10px;
     }
 
     .product-card img {
