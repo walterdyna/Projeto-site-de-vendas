@@ -8,11 +8,11 @@ body {
     line-height: 1.6;
 }
 
-.filter-btn{
+.filter-btn {
     border: none;
 }
 
-#btnReportStock{
+#btnReportStock {
     border-radius: 30px;
     padding: 5px;
 }
@@ -24,7 +24,7 @@ body {
     padding: 30px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 #user-management-section h2 {
@@ -91,7 +91,8 @@ body {
     margin-top: 30px;
 }
 
-#usersTable th, #usersTable td {
+#usersTable th,
+#usersTable td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
@@ -114,7 +115,7 @@ body {
     padding: 30px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -215,25 +216,32 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    color: #ffc107; /* Amarelo para hover */
+    color: #ffc107;
+    /* Amarelo para hover */
 }
 
 /* Botões */
-.btn, .btn-submit {
+.btn,
+.btn-submit {
     display: inline-block;
-    background-color: #007bff; /* Azul primário */
+    background-color: #007bff;
+    /* Azul primário */
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease;
-    border: none; /* Remover borda padrão de botão */
-    cursor: pointer; /* Cursor de mão ao passar por cima */
+    border: none;
+    /* Remover borda padrão de botão */
+    cursor: pointer;
+    /* Cursor de mão ao passar por cima */
     font-size: 1rem;
 }
 
-.btn:hover, .btn-submit:hover {
-    background-color: #0056b3; /* Azul mais escuro no hover */
+.btn:hover,
+.btn-submit:hover {
+    background-color: #0056b3;
+    /* Azul mais escuro no hover */
 }
 
 #search-input {
@@ -243,14 +251,14 @@ header nav ul li a:hover {
     border-color: #0056b3;
 }
 
-#search-btn{
+#search-btn {
     border-radius: 10px;
     margin-top: 10px;
     margin-left: 10px;
     border-color: #0056b3;
 }
 
-#category-select{
+#category-select {
     border-radius: 10px;
     margin-top: 10px;
     margin-left: 10px;
@@ -259,7 +267,8 @@ header nav ul li a:hover {
 
 /* Seção Hero (Página Inicial) */
 #hero {
-    background-color: #e2edff; /* Azul claro */
+    background-color: #e2edff;
+    /* Azul claro */
     text-align: center;
     padding: 50px 20px;
     margin-bottom: 30px;
@@ -276,22 +285,20 @@ header nav ul li a:hover {
     margin-bottom: 25px;
 }
 
-.menu-inicio{
-    padding: 10px;
-}
 
 /* Seção de Produtos (Catálogo na Página Inicial) */
 #products-catalog {
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
 }
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsivo, mínimo 250px por coluna */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Responsivo, mínimo 250px por coluna */
     gap: 25px;
     margin-top: 20px;
 }
@@ -302,19 +309,23 @@ header nav ul li a:hover {
     border-radius: 8px;
     overflow: hidden;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease;
 }
 
 .product-card:hover {
-    transform: translateY(-5px); /* Efeito de "levantar" ao passar o mouse */
+    transform: translateY(-5px);
+    /* Efeito de "levantar" ao passar o mouse */
 }
 
 .product-card img {
     width: 100%;
-    height: 200px; /* Altura fixa para as imagens */
-    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
-    display: block; /* Remove espaço extra abaixo da imagem */
+    height: 200px;
+    /* Altura fixa para as imagens */
+    object-fit: cover;
+    /* Garante que a imagem preencha o espaço sem distorcer */
+    display: block;
+    /* Remove espaço extra abaixo da imagem */
     border-bottom: 1px solid #eee;
 }
 
@@ -326,13 +337,15 @@ header nav ul li a:hover {
 
 .product-card .price {
     font-size: 1.4rem;
-    color: #28a745; /* Verde para preço */
+    color: #28a745;
+    /* Verde para preço */
     font-weight: bold;
     margin-bottom: 15px;
 }
 
 .product-card button {
-    background-color: #6c757d; /* Cinza para o botão de detalhes */
+    background-color: #6c757d;
+    /* Cinza para o botão de detalhes */
     color: #fff;
     padding: 8px 15px;
     border: none;
@@ -352,9 +365,10 @@ header nav ul li a:hover {
     padding: 30px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 600px;
-    margin: 30px auto; /* Centraliza o formulário */
+    margin: 30px auto;
+    /* Centraliza o formulário */
 }
 
 .product-form .form-group {
@@ -362,7 +376,8 @@ header nav ul li a:hover {
 }
 
 .product-form label {
-    display: block; /* Cada label em sua própria linha */
+    display: block;
+    /* Cada label em sua própria linha */
     margin-bottom: 5px;
     font-weight: bold;
     color: #555;
@@ -371,7 +386,8 @@ header nav ul li a:hover {
 .product-form input[type="text"],
 .product-form input[type="number"],
 .product-form textarea {
-    width: calc(100% - 22px); /* 100% menos padding e border */
+    width: calc(100% - 22px);
+    /* 100% menos padding e border */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -379,11 +395,13 @@ header nav ul li a:hover {
 }
 
 .product-form textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
+    resize: vertical;
+    /* Permite redimensionar verticalmente */
 }
 
 .product-form input[type="file"] {
-    display: block; /* Para o input file ficar abaixo do label */
+    display: block;
+    /* Para o input file ficar abaixo do label */
     margin-top: 5px;
 }
 
@@ -392,18 +410,21 @@ header nav ul li a:hover {
     border: 1px dashed #ccc;
     padding: 10px;
     text-align: center;
-    min-height: 100px; /* Altura mínima para o preview */
+    min-height: 100px;
+    /* Altura mínima para o preview */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f9f9f9;
     border-radius: 4px;
-    overflow: hidden; /* Garante que a imagem não vaze */
+    overflow: hidden;
+    /* Garante que a imagem não vaze */
 }
 
 .image-preview img {
     max-width: 100%;
-    max-height: 150px; /* Altura máxima da imagem no preview */
+    max-height: 150px;
+    /* Altura máxima da imagem no preview */
     display: block;
     border-radius: 4px;
 }
@@ -423,14 +444,18 @@ header nav ul li a:hover {
 }
 
 .message.success {
-    background-color: #d4edda; /* Verde claro */
-    color: #155724; /* Verde escuro */
+    background-color: #d4edda;
+    /* Verde claro */
+    color: #155724;
+    /* Verde escuro */
     border: 1px solid #c3e6cb;
 }
 
 .message.error {
-    background-color: #f8d7da; /* Vermelho claro */
-    color: #721c24; /* Vermelho escuro */
+    background-color: #f8d7da;
+    /* Vermelho claro */
+    color: #721c24;
+    /* Vermelho escuro */
     border: 1px solid #f5c6cb;
 }
 
@@ -447,16 +472,21 @@ footer {
 /* Responsividade Básica (para telas menores) */
 @media (max-width: 800px) {
     .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas até 800px */
+        grid-template-columns: repeat(2, 1fr);
+        /* Duas colunas em telas até 800px */
+    }
+
+    .menu-inicio {
+        padding: 10px;
     }
 }
 
 @media (max-width: 700px) {
-   body {
+    body {
         font-size: 14px;
     }
 
-    #filter-section{
+    #filter-section {
         font-size: 9px;
     }
 
@@ -468,7 +498,12 @@ footer {
         margin: 3px 0;
     }
 
-    .btn, .btn-submit {
+    .menu-inicio {
+        padding: 10px;
+    }
+
+    .btn,
+    .btn-submit {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
@@ -486,7 +521,8 @@ footer {
     }
 
     .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas pequenas */
+        grid-template-columns: repeat(2, 1fr);
+        /* Duas colunas em telas pequenas */
     }
 
     #search-section {
@@ -545,12 +581,16 @@ footer {
 }
 
 @media (max-width: 600px) {
-body {
+    body {
         font-size: 14px;
     }
 
-    #filter-section{
+    #filter-section {
         font-size: 9px;
+    }
+
+    .menu-inicio {
+        padding: 10px;
     }
 
     header h1 {
@@ -561,7 +601,8 @@ body {
         margin: 3px 0;
     }
 
-    .btn, .btn-submit {
+    .btn,
+    .btn-submit {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
@@ -579,7 +620,8 @@ body {
     }
 
     .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas pequenas */
+        grid-template-columns: repeat(2, 1fr);
+        /* Duas colunas em telas pequenas */
     }
 
     #search-section {
@@ -642,7 +684,7 @@ body {
         font-size: 14px;
     }
 
-    #filter-section{
+    #filter-section {
         font-size: 9px;
     }
 
@@ -654,7 +696,12 @@ body {
         margin: 3px 0;
     }
 
-    .btn, .btn-submit {
+    .menu-inicio {
+        padding: 10px;
+    }
+
+    .btn,
+    .btn-submit {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
@@ -672,7 +719,8 @@ body {
     }
 
     .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas pequenas */
+        grid-template-columns: repeat(2, 1fr);
+        /* Duas colunas em telas pequenas */
     }
 
     #search-section {
@@ -735,8 +783,12 @@ body {
         font-size: 14px;
     }
 
-    #filter-section{
+    #filter-section {
         font-size: 9px;
+    }
+
+    .menu-inicio {
+        padding: 10px;
     }
 
     header h1 {
@@ -747,7 +799,8 @@ body {
         margin: 3px 0;
     }
 
-    .btn, .btn-submit {
+    .btn,
+    .btn-submit {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
@@ -765,7 +818,8 @@ body {
     }
 
     .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* Duas colunas em telas pequenas */
+        grid-template-columns: repeat(2, 1fr);
+        /* Duas colunas em telas pequenas */
     }
 
     #search-section {
