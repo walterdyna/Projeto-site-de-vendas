@@ -349,7 +349,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cartModal.style.display = 'none';
     });
 
-    sendWhatsAppBtn.addEventListener('click', () => {
-        sendWhatsAppMessage();
-    });
+    const sendWhatsAppBtn = document.getElementById('send-whatsapp-btn');
+    if (sendWhatsAppBtn) {
+        sendWhatsAppBtn.addEventListener('click', () => {
+            sendWhatsAppMessage();
+        });
+    }
 });
