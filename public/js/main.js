@@ -209,6 +209,23 @@ document.addEventListener('DOMContentLoaded', () => {
             // Variável para armazenar os produtos filtrados
             let filteredProducts = products;
 
+            // Captura elementos da busca e filtro
+            const searchInput = document.getElementById('search-input');
+            const categorySelect = document.getElementById('category-select');
+            const searchBtn = document.getElementById('search-btn');
+
+            // Função para filtrar produtos por nome e categoria
+            function filterProducts() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                const selectedCategory = categorySelect.value;
+
+                filteredProducts = products.filter(product => {
+                    const matchesCategory = selectedCategory === 'Todos' || (product.origem || '').trim().toLowerCase() === selectedCategory.trim().toLowerCase();
+                    const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+                    return matchesCategory && matchesSearch;
+                });
+            }
+
             // Função para renderizar os produtos filtrados
             function renderFilteredProducts() {
                 productGrid.innerHTML = '';
@@ -301,20 +318,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Renderiza inicialmente todos os produtos
-            renderFilteredProducts();
+            // Função para atualizar a lista de produtos filtrados e renderizar
+            function updateProductList() {
+                filterProducts();
+                renderFilteredProducts();
+            }
 
-            // Adiciona event listeners aos botões de filtro
+            // Renderiza inicialmente todos os produtos
+            updateProductList();
+
+            // Adiciona event listener ao botão de busca
+            searchBtn.addEventListener('click', () => {
+                updateProductList();
+            });
+
+            // Adiciona event listeners aos botões de filtro para atualizar o seletor e disparar a busca
             const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const origin = button.getAttribute('data-origin');
-                    if (origin === 'Todos') {
-                        filteredProducts = products;
-                    } else {
-                        filteredProducts = products.filter(p => (p.origem || '').trim().toLowerCase() === origin.trim().toLowerCase());
-                    }
-                    renderFilteredProducts();
+                    categorySelect.value = origin;
+                    updateProductList();
                 });
             });
 
