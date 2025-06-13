@@ -276,6 +276,10 @@ header nav ul li a:hover {
     margin-bottom: 25px;
 }
 
+.menu-inicio{
+    padding: 10px;
+}
+
 /* Seção de Produtos (Catálogo na Página Inicial) */
 #products-catalog {
     padding: 20px;
