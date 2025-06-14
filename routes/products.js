@@ -104,6 +104,10 @@ router.put('/:id', upload.single('productImage'), verifyToken, verifyAdmin, asyn
         if (req.file) {
             updatedData.imageUrl = req.file.path;
         }
+        if (updatedData.productStock !== undefined) {
+            updatedData.stock = Number(Array.isArray(updatedData.productStock) ? updatedData.productStock[0] : updatedData.productStock);
+            delete updatedData.productStock;
+        }
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
             updatedData,

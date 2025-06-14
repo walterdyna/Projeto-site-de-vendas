@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('productCategory').value = product.category;
             document.getElementById('productOrigin').value = product.origem || '';
             imagePreview.innerHTML = `<img src="${product.imageUrl}" alt="${product.name}">`;
+            document.getElementById('productStock').value = product.stock || 0;
         })
         .catch(err => {
             console.error('Erro ao carregar produto:', err);
