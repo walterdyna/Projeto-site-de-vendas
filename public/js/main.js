@@ -1,26 +1,26 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Página inicial carregada!');
-
     const token = localStorage.getItem('token');
     const isAdmin = localStorage.getItem('isAdmin') === 'true';
     const username = localStorage.getItem('username');
 
-    // Show logged-in user info and logout button
-    const userInfoDiv = document.getElementById('user-info');
-    const loginLink = document.getElementById('login-link');
-    const usersLink = document.getElementById('users-link');
-    if (username) {
-        userInfoDiv.innerHTML = `Logado como: <strong>${username}</strong> <button id="logout-btn">Sair</button>`;
-        if (loginLink) loginLink.style.display = 'none';
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('Página inicial carregada!');
 
-        // Mostrar link Gerenciar Usuários apenas para supremo
-        if (usersLink) {
-            if (username === 'alexdyna' || username === 'queziacastelo') {
-                usersLink.style.display = 'inline';
-            } else {
-                usersLink.style.display = 'none';
+        // Show logged-in user info and logout button
+        const userInfoDiv = document.getElementById('user-info');
+        const loginLink = document.getElementById('login-link');
+        const usersLink = document.getElementById('users-link');
+        if (username) {
+            userInfoDiv.innerHTML = `Logado como: <strong>${username}</strong> <button id="logout-btn">Sair</button>`;
+            if (loginLink) loginLink.style.display = 'none';
+
+            // Mostrar link Gerenciar Usuários apenas para supremo
+            if (usersLink) {
+                if (username === 'alexdyna' || username === 'queziacastelo') {
+                    usersLink.style.display = 'inline';
+                } else {
+                    usersLink.style.display = 'none';
+                }
             }
-        }
 
         // Show "Gerar Relatório de Estoque" button only for user "alexdyna"
         const btnReportStock = document.getElementById('btnReportStock');
@@ -130,17 +130,17 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    function addToCart(product) {
-        const cart = getCart();
-        const existingItem = cart.find(item => item._id === product._id);
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({...product, quantity: 1});
-        }
-        saveCart(cart);
-        alert(`Produto "${product.name}" adicionado ao carrinho.`);
+function addToCart(product) {
+    const cart = getCart();
+    const existingItem = cart.find(item => item._id === product._id);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({...product, quantity: 1});
     }
+    saveCart(cart);
+    alert(`Produto "${product.name}" adicionado ao carrinho.`);
+}
 
     function calculateTotal(cart) {
         return cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cartTotalSpan.textContent = calculateTotal(cart).toFixed(2).replace('.', ',');
     }
 
-    function sendWhatsAppMessage() {
+    async function sendWhatsAppMessage() {
         const cart = getCart();
         if (cart.length === 0) {
             alert('O carrinho está vazio.');
@@ -181,20 +181,77 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const phoneNumber = '5527998615111'; // Número fixo para envio (exemplo)
         let message = 'Resumo do pedido:%0A';
-        cart.forEach(item => {
-            message += `${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')} x ${item.quantity}%0A`;
-        });
+
+        // Atualizar estoque e montar mensagem
+        for (const item of cart) {
+            try {
+                // Buscar produto atualizado para verificar estoque
+                const response = await fetch(`/api/products/${item._id}`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+                if (!response.ok) {
+                    alert(`Erro ao buscar produto ${item.name}: ${response.statusText}`);
+                    return;
+                }
+                const product = await response.json();
+
+                if (product.stock === 0) {
+                    message += `${item.name} (fazer pedido) - R$ ${item.price.toFixed(2).replace('.', ',')} x ${item.quantity}%0A`;
+                } else {
+                    message += `${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')} x ${item.quantity}%0A`;
+
+                    // Atualizar estoque no backend
+                    const newStock = product.stock - item.quantity;
+                    if (newStock < 0) {
+                        alert(`Estoque insuficiente para o produto ${item.name}.`);
+                        return;
+                    }
+                    const updateResponse = await fetch(`/api/products/${item._id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ stock: newStock })
+                    });
+                    if (!updateResponse.ok) {
+                        alert(`Erro ao atualizar estoque do produto ${item.name}: ${updateResponse.statusText}`);
+                        return;
+                    }
+                }
+            } catch (error) {
+                alert(`Erro na requisição para o produto ${item.name}: ${error.message}`);
+                return;
+            }
+        }
+
         message += `Total: R$ ${calculateTotal(cart).toFixed(2).replace('.', ',')}`;
         const url = `https://wa.me/${phoneNumber}?text=${message}`;
         window.open(url, '_blank');
+
+        // Limpar carrinho após envio
+        saveCart([]);
+        renderCart();
     }
 
-    function removeFromCart(productId) {
-        let cart = getCart();
+async function removeFromCart(productId) {
+    let cart = getCart();
+    const itemToRemove = cart.find(item => item._id === productId);
+    if (!itemToRemove) return;
+
+    try {
+        // Remover do carrinho e atualizar UI
         cart = cart.filter(item => item._id !== productId);
         saveCart(cart);
         renderCart();
+        console.log(`Produto ${productId} removido do carrinho com sucesso.`);
+    } catch (error) {
+        alert(`Erro na requisição para remoção do produto: ${error.message}`);
+        console.error(`Erro na remoção do produto ${productId}:`, error);
     }
+}
 
     fetch('/api/products')
         .then(response => response.json())

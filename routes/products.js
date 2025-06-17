@@ -97,6 +97,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/report', verifyToken, verifyAdmin, async (req, res) => {
+    try {
+        console.log('Gerando relatório de estoque...');
+        const products = await Product.find();
+        console.log(`Produtos encontrados: ${products.length}`);
+        // Gerar relatório simples em JSON
+        const report = products.map(p => ({
+            name: p.name,
+            price: p.price,
+            stock: p.stock
+        }));
+        res.json(report);
+    } catch (err) {
+        console.error('Erro ao gerar relatório de estoque:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Atualizar produto
 router.put('/:id', upload.single('productImage'), verifyToken, verifyAdmin, async (req, res) => {
     try {
@@ -120,43 +138,12 @@ router.put('/:id', upload.single('productImage'), verifyToken, verifyAdmin, asyn
     }
 });
 
-// Deletar produto
-router.delete('/:id', verifyToken, verifyAdmin, async (req, res) => {
+// Buscar produto por id
+router.get('/:id', async (req, res) => {
     try {
-        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-        if (!deletedProduct) return res.status(404).json({ error: 'Produto não encontrado' });
-        res.json({ message: 'Produto deletado com sucesso' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Validar estoque antes da venda
-router.post('/validate-stock', async (req, res) => {
-    try {
-        const { productId, quantity } = req.body;
-        const product = await Product.findById(productId);
+        const product = await Product.findById(req.params.id);
         if (!product) return res.status(404).json({ error: 'Produto não encontrado' });
-        if (product.stock < quantity) {
-            return res.status(400).json({ error: 'Estoque insuficiente' });
-        }
-        res.json({ message: 'Estoque disponível' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Gerar relatório de estoque (somente admin)
-router.get('/report', verifyToken, verifyAdmin, async (req, res) => {
-    try {
-        const products = await Product.find();
-        // Gerar relatório simples em JSON
-        const report = products.map(p => ({
-            name: p.name,
-            price: p.price,
-            stock: p.stock
-        }));
-        res.json(report);
+        res.json(product);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

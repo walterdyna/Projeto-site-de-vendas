@@ -123,6 +123,9 @@ app.use((req, res) => {
 // Middleware global de tratamento de erros
 app.use((err, req, res, next) => {
     console.error('Erro global capturado:', err);
+    if (err.name === 'UnauthorizedError') {
+        return res.status(401).json({ message: 'Token inválido ou não fornecido' });
+    }
     res.status(500).json({ error: err.message || 'Erro interno do servidor' });
 });
 
