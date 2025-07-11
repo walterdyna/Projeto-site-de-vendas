@@ -173,7 +173,7 @@ function addToCart(product) {
         cartTotalSpan.textContent = calculateTotal(cart).toFixed(2).replace('.', ',');
     }
 
-    async function sendWhatsAppMessage() {
+async function sendWhatsAppMessage() {
         const cart = getCart();
         if (cart.length === 0) {
             alert('O carrinho está vazio.');
@@ -182,9 +182,9 @@ function addToCart(product) {
         const phoneNumber = '5527998615111'; // Número fixo para envio (exemplo)
         let message = 'Resumo do pedido:%0A';
 
-        // Atualizar estoque e montar mensagem
-        for (const item of cart) {
-            try {
+        try {
+            // Atualizar estoque e montar mensagem
+            for (const item of cart) {
                 // Buscar produto atualizado para verificar estoque
                 const response = await fetch(`/api/products/${item._id}`, {
                     headers: {
@@ -221,19 +221,20 @@ function addToCart(product) {
                         return;
                     }
                 }
-            } catch (error) {
-                alert(`Erro na requisição para o produto ${item.name}: ${error.message}`);
-                return;
             }
+
+            message += `Total: R$ ${calculateTotal(cart).toFixed(2).replace('.', ',')}`;
+            const url = `https://wa.me/${phoneNumber}?text=${message}`;
+            console.log('Abrindo URL do WhatsApp:', url);
+            window.open(url, '_blank');
+
+            // Limpar carrinho após envio
+            saveCart([]);
+            renderCart();
+        } catch (error) {
+            alert('Erro inesperado ao enviar mensagem: ' + error.message);
+            console.error('Erro no envio da mensagem WhatsApp:', error);
         }
-
-        message += `Total: R$ ${calculateTotal(cart).toFixed(2).replace('.', ',')}`;
-        const url = `https://wa.me/${phoneNumber}?text=${message}`;
-        window.open(url, '_blank');
-
-        // Limpar carrinho após envio
-        saveCart([]);
-        renderCart();
     }
 
 async function removeFromCart(productId) {
