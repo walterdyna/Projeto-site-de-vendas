@@ -437,4 +437,57 @@ async function removeFromCart(productId) {
             sendWhatsAppMessage();
         });
     }
+
+    // Novo código para carregar e renderizar o carrossel de produtos em destaque
+    fetch('/api/products')
+        .then(response => response.json())
+        .then(products => {
+            const featuredProducts = products.filter(p => p.destaque);
+            const swiperWrapper = document.getElementById('featured-carousel');
+            swiperWrapper.innerHTML = '';
+
+            featuredProducts.forEach(product => {
+                const slide = document.createElement('div');
+                slide.classList.add('swiper-slide');
+                slide.innerHTML = `
+                    <img src="${product.imageUrl || 'https://via.placeholder.com/300'}" alt="${product.name}" style="width: 100%; height: auto; border-radius: 8px;">
+                    <h3 style="text-align: center; margin-top: 8px;">${product.name}</h3>
+                `;
+                swiperWrapper.appendChild(slide);
+            });
+
+            // Inicializar Swiper
+            const swiper = new Swiper('.mySwiper', {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 40,
+                    },
+                },
+            });
+        })
+        .catch(error => console.error('Erro ao carregar produtos em destaque:', error));
 });

@@ -54,14 +54,25 @@ router.post('/', upload.single('productImage'), verifyToken, verifyAdmin, async 
     try {
         console.log('Recebido corpo:', req.body);
         console.log('Arquivo recebido:', req.file);
-        const { productName, productPrice, productStock, productDescription, productCategory, productOrigin } = req.body;
+        const { productName, productPrice, productStock, productDescription, productCategory, productOrigin, destaque } = req.body;
+
+        // Se destaque for true, gerenciar limite de 6 produtos destacados
+        if (destaque === 'true' || destaque === true) {
+            const destacadosCount = await Product.countDocuments({ destaque: true });
+            if (destacadosCount >= 6) {
+                // Não permitir adicionar mais de 6 produtos em destaque
+                return res.status(400).json({ error: 'Limite de 6 produtos em destaque atingido.' });
+            }
+        }
+
         const newProduct = new Product({
             name: productName,
             price: Number(productPrice),
             stock: Number(Array.isArray(productStock) ? productStock[0] : productStock),
             description: productDescription,
             category: productCategory,
-            origem: productOrigin
+            origem: productOrigin,
+            destaque: destaque === 'true' || destaque === true
         });
         if (req.file) {
             console.log('Tentando atribuir imagem:', req.file.path);

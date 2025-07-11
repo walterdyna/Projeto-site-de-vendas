@@ -8,6 +8,23 @@ body {
     line-height: 1.6;
 }
 
+.swiper-slide img {
+    width: 220px !important;
+    height: 100px !important; /* Ajustado para metade da altura anterior */
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+}
+
+.carousel-container {
+    max-width: 720px;
+    margin: 0 auto;
+    border: 2px solid #0056b3;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
 .filter-btn {
     border: none;
 }
@@ -270,8 +287,8 @@ header nav ul li a:hover {
     background-color: #e2edff;
     /* Azul claro */
     text-align: center;
-    padding: 50px 20px;
-    margin-bottom: 30px;
+    padding: 10px 10px;
+    margin-bottom: 20px;
     border-radius: 8px;
 }
 

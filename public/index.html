@@ -39,8 +39,25 @@
         <section id="hero">
             <h2>Catálogo Quezia: Seu Desejo, Pronta Entrega e com Estilo!</h2>
             <p>Explore nossa seleção exclusiva de produtos e receba a beleza que você merece, sem espera.</p>
-            <a href="cadastro.html" class="btn">Comece a Cadastrar Agora!</a>
+
+            <!-- Carousel Swiper -->
+            <div class="carousel-container" style="max-width: 720px; margin: 0 auto; border: 2px solid #0056b3; padding: 10px; border-radius: 8px;">
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper" id="featured-carousel">
+                        <!-- Slides serão inseridos dinamicamente aqui -->
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
         </section>
+
+        <!-- Swiper CSS and JS CDN -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
         <section id="filter-section" style="margin-bottom: 20px;">
             <button class="filter-btn" data-origin="Todos">Todos</button>
